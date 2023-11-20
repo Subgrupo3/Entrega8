@@ -1,6 +1,8 @@
 const express = require('express');
 
 const jwt = require("jsonwebtoken");
+const fs = require('fs');
+
 const SECRET_KEY = "CLAVE";
 
 const app = express();
@@ -110,19 +112,27 @@ app.get(`/cart`, (req, res) => {
   }
 });
 
-app.post(`/cart`, (req, res) => {
+app.post(`/cart`, async (req, res) => {
   try {
-    const decoded = jwt.verify(req.headers["access-token"], SECRET_KEY);
-    console.log(decoded);
+    const token = req.headers["authorization"];
+    if (!token) {
+      return res.status(401).json({ message: "Token de autorización no proporcionado" });
+    }
 
-    const cart = require(__dirname + `/Apis/user_cart/25801.json`);
+    const decoded = await jwt.verify(token, SECRET_KEY);
 
     // Agregar el nuevo artículo al carrito
     const newArticle = req.body;
+
+    // Cargar el carrito
+    const cartFilePath = __dirname + `/Apis/user_cart/25801.json`;
+    const cart = require(cartFilePath);
+
+    // Modificar el carrito
     cart.articles.push(newArticle);
 
     // Guardar el carrito actualizado en el archivo
-    fs.writeFileSync(__dirname + `/Apis/user_cart/25801.json`, JSON.stringify(cart, null, 2));
+    fs.writeFileSync(cartFilePath, JSON.stringify(cart));
 
     res.status(200).json({ message: 'Producto agregado al carrito exitosamente' });
   } catch (err) {

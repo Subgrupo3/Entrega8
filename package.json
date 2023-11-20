@@ -11,6 +11,5 @@
     "jsonwebtoken": "^9.0.2"
   },
   "author": "Subgrupo 3",
-  "license": "ISC",
-  "devDependencies": {}
+  "license": "ISC"
 }

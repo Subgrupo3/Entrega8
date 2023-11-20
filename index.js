@@ -115,15 +115,14 @@ app.post(`/cart`, (req, res) => {
     const decoded = jwt.verify(req.headers["access-token"], SECRET_KEY);
     console.log(decoded);
 
-    const cartPath = __dirname + `/Apis/user_cart/25801.json`;
-    const cart = require(cartPath);
+    const cart = require(__dirname + `/Apis/user_cart/25801.json`);
 
     // Agregar el nuevo artículo al carrito
-    const newArticle = req.body.articles[0];
+    const newArticle = req.body;
     cart.articles.push(newArticle);
 
     // Guardar el carrito actualizado en el archivo
-    fs.writeFileSync(cartPath, JSON.stringify(cart, null, 2));
+    fs.writeFileSync(__dirname + `/Apis/user_cart/25801.json`, JSON.stringify(cart, null, 2));
 
     res.status(200).json({ message: 'Producto agregado al carrito exitosamente' });
   } catch (err) {

@@ -1,5 +1,5 @@
 {
-  "name": "mi-proyecto",
+  "name": "proyecto-sub3",
   "version": "1.0.0",
   "description": "Descripción de tu proyecto",
   "main": "index.js",
@@ -7,6 +7,10 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
-  }
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "author": "Subgrupo 3",
+  "license": "ISC",
+  "devDependencies": {}
 }
